@@ -12,6 +12,7 @@
     <ProjectReference Include="..\Auth0BlazorDemo.Client\Auth0BlazorDemo.Client.csproj" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.0" />
     <PackageReference Include=" Microsoft.AspNetCore.Components.Authorization" Version="8.0.1" />
+    <ProjectReference Include="..\Auth0BlazorDemo.Shared\Auth0BlazorDemo.Shared.csproj" />
   </ItemGroup>
 
 </Project>

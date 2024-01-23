@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
-namespace Auth0BlazorDemo.Auth;
+namespace Auth0BlazorDemo.Endpoints;
 
-public static class AuthExtensions
+public static class Auth
 {
     public static void MapAuthRoutes(this WebApplication app)
     {

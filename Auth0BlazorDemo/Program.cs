@@ -1,7 +1,7 @@
 using Auth0.AspNetCore.Authentication;
-using Auth0BlazorDemo.Auth;
 using Auth0BlazorDemo.Client.Pages;
 using Auth0BlazorDemo.Components;
+using Auth0BlazorDemo.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +18,12 @@ builder.Services
         options.Domain = builder.Configuration["Auth0:Domain"]!;
         options.ClientId = builder.Configuration["Auth0:AppClientId"]!;
     });
+
+builder.Services.AddScoped(sp => new HttpClient
+{
+    BaseAddress = new Uri("https://localhost:7001/")
+});
+
 
 var app = builder.Build();
 
@@ -39,6 +45,7 @@ app.UseStaticFiles();
 app.UseAntiforgery();
 
 app.MapAuthRoutes();
+app.MapWeatherEndpoints();
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()
