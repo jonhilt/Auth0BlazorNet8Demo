@@ -1,7 +1,8 @@
 using Auth0.AspNetCore.Authentication;
 using Auth0BlazorDemo.Client.Pages;
 using Auth0BlazorDemo.Components;
-using Auth0BlazorDemo.Endpoints;
+using Auth0BlazorDemo.Identity;
+using Microsoft.AspNetCore.Components.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveWebAssemblyComponents();
 
 builder.Services.AddCascadingAuthenticationState();
+builder.Services.AddScoped<AuthenticationStateProvider, PersistingAuthenticationStateProvider>();
 
 builder.Services
     .AddAuth0WebAppAuthentication(options =>
@@ -19,11 +21,7 @@ builder.Services
         options.ClientId = builder.Configuration["Auth0:AppClientId"]!;
     });
 
-builder.Services.AddScoped(sp => new HttpClient
-{
-    BaseAddress = new Uri("https://localhost:7001/")
-});
-
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
@@ -41,11 +39,11 @@ else
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.UseStaticFiles();
 app.UseAntiforgery();
-
-app.MapAuthRoutes();
-app.MapWeatherEndpoints();
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()

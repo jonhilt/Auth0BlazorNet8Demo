@@ -1,51 +1,70 @@
 ﻿@page "/weather"
-@using Auth0BlazorDemo.Shared
-@rendermode InteractiveWebAssembly
-@inject HttpClient Http
+@rendermode @(InteractiveWebAssembly)
 
 <PageTitle>Weather</PageTitle>
 
-<h1>Weather</h1>
+<AuthorizeView>
+    <Authorized>
+        <h1>Weather</h1>
 
-<p>This component demonstrates showing data.</p>
+        <p>This component demonstrates showing data.</p>
 
-@if (_forecasts == null)
-{
-    <p>
-        <em>Loading...</em>
-    </p>
-}
-else
-{
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Date</th>
-            <th>Temp. (C)</th>
-            <th>Temp. (F)</th>
-            <th>Summary</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach (var forecast in _forecasts)
+        @if (_forecasts == null)
         {
-            <tr>
-                <td>@forecast.Date.ToShortDateString()</td>
-                <td>@forecast.TemperatureC</td>
-                <td>@forecast.TemperatureF</td>
-                <td>@forecast.Summary</td>
-            </tr>
+            <p>
+                <em>Loading...</em>
+            </p>
         }
-        </tbody>
-    </table>
-}
+        else
+        {
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Temp. (C)</th>
+                    <th>Summary</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var forecast in _forecasts)
+                {
+                    <tr>
+                        <td>@forecast.Date.ToShortDateString()</td>
+                        <td>@forecast.TemperatureC</td>
+                        <td>@forecast.Summary</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        }
+    </Authorized>
+    <NotAuthorized>
+        You are not authorised!
+    </NotAuthorized>
+</AuthorizeView>
 
 @code {
+
     private IEnumerable<WeatherForecast>? _forecasts;
 
     protected override async Task OnInitializedAsync()
     {
-        _forecasts = await Http.GetFromJsonAsync<IEnumerable<WeatherForecast>>("/api/weather");
+        var startDate = DateOnly.FromDateTime(DateTime.Now);
+        var summaries = new[]
+            { "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching" };
+        _forecasts = Enumerable.Range(1, 5).Select(index => new WeatherForecast
+        {
+            Date = startDate.AddDays(index),
+            TemperatureC = Random.Shared.Next(-20, 55),
+            Summary = summaries[Random.Shared.Next(summaries.Length)]
+        });
+    }
+
+    private class WeatherForecast
+    {
+        public DateOnly Date { get; set; }
+        public int TemperatureC { get; set; }
+        public string Summary { get; set; }
     }
 
 }

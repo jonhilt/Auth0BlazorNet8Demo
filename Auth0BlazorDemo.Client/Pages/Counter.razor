@@ -1,5 +1,5 @@
 ﻿@page "/counter"
-@rendermode InteractiveAuto
+@rendermode @(new InteractiveAutoRenderMode(false))
 
 <PageTitle>Counter</PageTitle>
 
@@ -9,11 +9,15 @@
 
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 
+@_sayResult
+
 @code {
     private int currentCount = 0;
+    private string _sayResult;
 
     private void IncrementCount()
     {
         currentCount++;
     }
+
 }
