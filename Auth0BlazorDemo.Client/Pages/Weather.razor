@@ -22,6 +22,7 @@
                 <tr>
                     <th>Date</th>
                     <th>Temp. (C)</th>
+                    <th>Temp. (F)</th>
                     <th>Summary</th>
                 </tr>
                 </thead>
@@ -31,6 +32,7 @@
                     <tr>
                         <td>@forecast.Date.ToShortDateString()</td>
                         <td>@forecast.TemperatureC</td>
+                        <td>@forecast.TemperatureF</td>
                         <td>@forecast.Summary</td>
                     </tr>
                 }
@@ -65,6 +67,7 @@
         public DateOnly Date { get; set; }
         public int TemperatureC { get; set; }
         public string Summary { get; set; }
+        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
     }
 
 }
