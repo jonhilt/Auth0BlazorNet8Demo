@@ -1,6 +1,7 @@
 using Auth0.AspNetCore.Authentication;
 using Auth0BlazorDemo.Client.Pages;
 using Auth0BlazorDemo.Components;
+using Auth0BlazorDemo.Endpoints;
 using Auth0BlazorDemo.Identity;
 using Microsoft.AspNetCore.Components.Authorization;
 
@@ -44,6 +45,8 @@ app.UseAuthorization();
 
 app.UseStaticFiles();
 app.UseAntiforgery();
+
+app.MapAuthRoutes();
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()
