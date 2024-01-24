@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
-using Auth0BlazorDemo.Client.Services;
+using Auth0BlazorDemo.Client;
+using Auth0BlazorDemo.Client.Auth;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server;

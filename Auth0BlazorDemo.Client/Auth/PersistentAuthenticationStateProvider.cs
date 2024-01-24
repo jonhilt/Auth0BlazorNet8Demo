@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 
-namespace Auth0BlazorDemo.Client.Services;
+namespace Auth0BlazorDemo.Client.Auth;
 
 public class PersistentAuthenticationStateProvider : AuthenticationStateProvider
 {

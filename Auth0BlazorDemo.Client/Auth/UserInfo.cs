@@ -1,4 +1,4 @@
-﻿namespace Auth0BlazorDemo.Client.Services;
+﻿namespace Auth0BlazorDemo.Client.Auth;
 
 public class UserInfo
 {
